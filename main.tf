@@ -59,7 +59,7 @@ locals {
 
   labels = [for l in local.label_order : local.id_context[l]]
 
-  id = lower(join(local.delimiter, local.labels))
+  id = lower(join(local.delimiter, compact(local.labels)))
 
   # Context of this label to pass to other label modules
   output_context = {
