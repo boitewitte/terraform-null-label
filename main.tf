@@ -34,7 +34,7 @@ locals {
   all_attributes      = (
     var.context.attributes != null
      ? compact(concat(var.attributes, var.context.attributes))
-     : var.attributes
+     : compact(var.attributes)
   )
 
   # Merge attributes
@@ -72,7 +72,7 @@ locals {
     namespace           = local.namespace
     environment         = local.environment
     stage               = local.stage
-    attributes          = local.attributes
+    attributes          = length(local.attributes) > 0 ? local.attributes : local.all_attributes
     tags                = local.tags
     delimiter           = local.delimiter
     label_order         = local.label_order
