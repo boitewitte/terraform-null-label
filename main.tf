@@ -31,7 +31,11 @@ locals {
   label_order         = length(var.label_order) > 0 ? var.label_order : (length(var.context.label_order) > 0 ? var.context.label_order : local.defaults.label_order)
   additional_tag_map  = merge(var.context.additional_tag_map, var.additional_tag_map)
 
-  all_attributes      = compact(concat(var.attributes, var.context.attributes != null ? var.context.attributes : []))
+  all_attributes      = (
+    var.context.attributes != null
+     ? compact(concat(var.attributes, var.context.attributes))
+     : var.attributes
+  )
 
   # Merge attributes
   attributes = length(local.all_attributes) > 0 ? distinct(local.all_attributes) : []
