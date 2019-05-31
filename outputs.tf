@@ -56,3 +56,7 @@ output "label_order" {
 output "input_context" {
   value       = var.context
 }
+
+output "input_attributes" {
+  value       = var.attributes
+}
