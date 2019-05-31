@@ -72,6 +72,7 @@ locals {
     tags                = local.tags
     delimiter           = local.delimiter
     label_order         = local.label_order
+    additional_tag_map  = local.additional_tag_map
     regex_replace_chars = local.regex_replace_chars
   }
 
