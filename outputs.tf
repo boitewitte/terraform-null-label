@@ -33,6 +33,14 @@ output "all_attributes" {
   description = "List of all attributes"
 }
 
+output "attributes_is_null" {
+  value       = local.attributes == null ? "yes" : "no"
+}
+
+output "all_attributes_is_null" {
+  value       = local.all_attributes == null ? "yes" : "no"
+}
+
 output "delimiter" {
   value       = local.enabled ? local.delimiter : ""
   description = "Delimiter between `namespace`, `environment`, `stage`, `name` and `attributes`"
