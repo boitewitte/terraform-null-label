@@ -28,6 +28,11 @@ output "attributes" {
   description = "List of attributes"
 }
 
+output "all_attributes" {
+  value       = local.all_attributes
+  description = "List of all attributes"
+}
+
 output "delimiter" {
   value       = local.enabled ? local.delimiter : ""
   description = "Delimiter between `namespace`, `environment`, `stage`, `name` and `attributes`"
