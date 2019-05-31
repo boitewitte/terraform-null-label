@@ -32,7 +32,7 @@ locals {
   additional_tag_map  = merge(var.context.additional_tag_map, var.additional_tag_map)
 
   all_attributes      = (
-    var.context.attributes != null
+    var.context.attributes != null && length(var.context.attributes) > 0
      ? compact(concat(var.attributes, var.context.attributes))
      : compact(var.attributes)
   )
@@ -72,7 +72,7 @@ locals {
     namespace           = local.namespace
     environment         = local.environment
     stage               = local.stage
-    attributes          = length(local.all_attributes) > 0 ? local.attributes : [""]
+    attributes          = length(local.all_attributes) > 0 ? local.attributes : local.all_attributes
     tags                = local.tags
     delimiter           = local.delimiter
     label_order         = local.label_order
