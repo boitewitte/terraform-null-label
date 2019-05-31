@@ -52,3 +52,7 @@ output "label_order" {
   value       = local.label_order
   description = "The naming order of the id output and Name tag"
 }
+
+output "input_context" {
+  value       = var.context
+}
