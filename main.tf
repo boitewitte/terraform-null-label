@@ -72,7 +72,7 @@ locals {
     namespace           = local.namespace
     environment         = local.environment
     stage               = local.stage
-    attributes          = length(local.attributes) > 0 ? local.attributes : local.all_attributes
+    attributes          = length(local.attributes) > 0 ? local.attributes : []
     tags                = local.tags
     delimiter           = local.delimiter
     label_order         = local.label_order
