@@ -28,19 +28,6 @@ output "attributes" {
   description = "List of attributes"
 }
 
-output "all_attributes" {
-  value       = local.all_attributes
-  description = "List of all attributes"
-}
-
-output "attributes_is_null" {
-  value       = local.attributes == null ? "yes" : "no"
-}
-
-output "all_attributes_is_null" {
-  value       = local.all_attributes == null ? "yes" : "no"
-}
-
 output "delimiter" {
   value       = local.enabled ? local.delimiter : ""
   description = "Delimiter between `namespace`, `environment`, `stage`, `name` and `attributes`"
@@ -59,12 +46,4 @@ output "context" {
 output "label_order" {
   value       = local.label_order
   description = "The naming order of the id output and Name tag"
-}
-
-output "input_context" {
-  value       = var.context
-}
-
-output "input_attributes" {
-  value       = var.attributes
 }

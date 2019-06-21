@@ -3,7 +3,8 @@ locals {
   defaults = {
     label_order = ["namespace", "environment", "stage", "name", "attributes"]
     delimiter   = "-"
-    replacement = ""
+    replacement = "",
+    empty_state = "~~"
   }
 
   # Provided values provided by variables superceed values inherited from the context
@@ -11,20 +12,20 @@ locals {
   enabled             = var.enabled
   regex_replace_chars = coalesce(var.regex_replace_chars, var.context.regex_replace_chars)
 
-  name                = lower(replace(coalesce(var.name, var.context.name), local.regex_replace_chars, local.defaults.replacement))
+  name                = lower(replace(coalesce(var.name, var.context.name, local.defaults.empty_state), local.regex_replace_chars, local.defaults.replacement))
   namespace           = (
     var.namespace != "" || var.context.namespace != ""
-      ? lower(replace(coalesce(var.namespace, var.context.namespace), local.regex_replace_chars, local.defaults.replacement))
+      ? lower(replace(coalesce(var.namespace, var.context.namespace, local.defaults.empty_state), local.regex_replace_chars, local.defaults.replacement))
       : ""
   )
   environment         = (
     var.environment != "" || var.context.environment != ""
-      ? lower(replace(coalesce(var.environment, var.context.environment), local.regex_replace_chars, local.defaults.replacement))
+      ? lower(replace(coalesce(var.environment, var.context.environment, local.defaults.empty_state), local.regex_replace_chars, local.defaults.replacement))
       : ""
   )
   stage               = (
     var.stage != "" || var.context.stage != ""
-    ? lower(replace(coalesce(var.stage, var.context.stage), local.regex_replace_chars, local.defaults.replacement))
+    ? lower(replace(coalesce(var.stage, var.context.stage, local.defaults.empty_state), local.regex_replace_chars, local.defaults.replacement))
     : ""
   )
   delimiter           = coalesce(var.delimiter, var.context.delimiter, local.defaults.delimiter)
@@ -50,10 +51,10 @@ locals {
   tags                 = merge(var.context.tags, local.generated_tags, var.tags)
 
   id_context = {
-    name        = local.name
-    namespace   = local.namespace
-    environment = local.environment
-    stage       = local.stage
+    name        = local.name == local.defaults.empty_state ? "" : local.name
+    namespace   = local.namespace == local.defaults.empty_state ? "" : local.namespace
+    environment = local.environment == local.defaults.empty_state ? "" : local.environment
+    stage       = local.stage == local.defaults.empty_state ? "" : local.stage
     attributes  = (
       length(local.all_attributes) > 0
         ? lower(replace(join(local.delimiter, local.attributes), local.regex_replace_chars, local.defaults.replacement))
@@ -79,5 +80,4 @@ locals {
     additional_tag_map  = local.additional_tag_map
     regex_replace_chars = local.regex_replace_chars
   }
-
 }
